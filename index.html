@@ -1,150 +1,361 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Herry Herdianto - Tech Lead, Software Architect, and IT Consultant"/>
-  <title>Herry Herdianto | Tech Lead & Software Architect</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background-color: #004182;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin-bottom: 0.2rem;
-      font-size: 2rem;
-    }
-    header p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem 1rem;
-      background: white;
-    }
-    section {
-      margin-bottom: 2rem;
-    }
-    section h2 {
-      color: #004182;
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .experience, .education {
-      margin-bottom: 1rem;
-    }
-    .experience h3, .education h3 {
-      margin: 0.2rem 0;
-      font-size: 1.1rem;
-    }
-    .experience p, .education p {
-      margin: 0.1rem 0;
-      color: #666;
-    }
-    .skills span {
-      display: inline-block;
-      background-color: #e0ecff;
-      color: #004182;
-      padding: 0.3rem 0.6rem;
-      margin: 0.3rem;
-      border-radius: 5px;
-      font-size: 0.9rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #f4f4f4;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    a {
-      color: #004182;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Herry Portfolio</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
+
 <body>
+    <div id="mobile-menu-open" class="shadow-large">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <!-- End #mobile-menu-toggle -->
+    <header>
+        <div id="mobile-menu-close">
+            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <ul id="menu" class="shadow">
+            <li>
+                <a href="#about">About</a>
+            </li>
+            <li>
+                <a href="#experience">Experience</a>
+            </li>
+            <li>
+                <a href="#education">Education</a>
+            </li>
+            <li>
+                <a href="#projects">Projects</a>
+            </li>
+            <li>
+                <a href="#skills">Skills</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+        </ul>
+    </header>
+    <!-- End header -->
 
-  <header>
-    <h1>Herry Herdianto</h1>
-    <p>Tech Lead • Software Architect • Full-Stack Developer • IT Consultant</p>
-    <p><a href="https://www.linkedin.com/in/herry-herdianto/" target="_blank" style="color: #cce7ff;">View LinkedIn</a></p>
-  </header>
+    <div id="lead">
+        <div id="lead-content">
+            <h1>Herry Herdianto</h1>
+            <h2>Senior Programmer</h2>
+            <a href="resume/Resume-HerryHerdianto.pdf" class="btn-rounded-white">Download Resume</a>
+        </div>
+        <!-- End #lead-content -->
 
-  <div class="container">
-    <section>
-      <h2>About Me</h2>
-      <p>I am a seasoned Software Architect and Tech Lead with over 15 years of experience delivering scalable, secure, and performant systems across diverse industries. I specialize in designing distributed systems, leading engineering teams, and implementing DevOps best practices.</p>
-    </section>
+        <div id="lead-overlay"></div>
 
-    <section>
-      <h2>Experience</h2>
+        <div id="lead-down">
+            <span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+        </div>
+        <!-- End #lead-down -->
+    </div>
+    <!-- End #lead -->
 
-      <div class="experience">
-        <h3>Tech Lead @ Leading Financial Institution</h3>
-        <p>2021 – Present</p>
-        <p>Leading the architecture and development of enterprise-grade financial platforms, mentoring engineers, and enforcing clean code and testing practices.</p>
-      </div>
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2 class="heading">About Me</h2>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                        Highly-skilled software development professional bringing more than 20 years in software design, development and integration. Advanced knowledge of Java and PHP programming languages and Linux Administrator. Handled more than 75 application development projects at various company or organization. Currently serving as CTO at RVARE and Technology Lead at FNI, with expertise in full-stack development, AI crisis monitoring, and high-availability scalable applications.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End #about -->
 
-      <div class="experience">
-        <h3>Software Architect @ SaaS Startup</h3>
-        <p>2017 – 2021</p>
-        <p>Designed scalable multi-tenant platforms using microservices, containerization, and CI/CD pipelines. Collaborated with product teams and oversaw code quality.</p>
-      </div>
-    </section>
+    <div id="experience" class="background-alt">
+        <h2 class="heading">Experience</h2>
+        <div id="experience-timeline">
+            <div data-date="August 2025 – Present">
+                <h3>RVARE</h3>
+                <h4>CTO</h4>
+                <p>
+                    Full stack developer with end-to-end technology vision and development. Product research and development. Develop high availability - high scalability AI crisis monitoring system.
+                </p>
+            </div>
 
-    <section>
-      <h2>Education</h2>
+            <div data-date="February 2025 – Present">
+                <h3>FNI</h3>
+                <h4>Technology Lead</h4>
+                <p>
+                    Full stack developer with product development and research. Develop high availability - high scalability e-commerce web application.
+                </p>
+            </div>
 
-      <div class="education">
-        <h3>Bachelor of Computer Science</h3>
-        <p>Top University, Indonesia – 2006–2010</p>
-      </div>
-    </section>
+            <div data-date="July 2024 – Present">
+                <h3>BoringAI</h3>
+                <h4>Lead Back End Developer</h4>
+                <p>
+                    Back End developer with product development. Develop high availability - high scalability web application with micro services.
+                </p>
+            </div>
 
-    <section>
-      <h2>Skills</h2>
-      <div class="skills">
-        <span>Java</span>
-        <span>Node.js</span>
-        <span>Docker</span>
-        <span>PHP</span>
-        <span>Python</span>
-        <span>Microservices</span>
-        <span>CI/CD</span>
-        <span>Agile</span>
-        <span>PostgreSQL</span>
-        <span>MongoDB</span>
-        <span>React</span>
-        <span>REST APIs</span>
-        <span>Architecture Design</span>
-      </div>
-    </section>
+            <div data-date="July 2022 – March 2024">
+                <h3>Mebiso.com</h3>
+                <h4>CTO</h4>
+                <p>
+                    Full Stack developer and Project Leader. Product research and development. Provide dedicated coaching to interns. Develop high availability - high scalability web application with micro services.
+                </p>
+            </div>
 
-    <section>
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:hherdianto@example.com">hherdianto@gmail.com</a></p>
-      <p>GitHub: <a href="https://github.com/hherdianto" target="_blank">github.com/hherdianto</a></p>
-    </section>
-  </div>
+            <div data-date="July 2018 – September 2022">
+                <h3>BisnisOn.com</h3>
+                <h4>CTO</h4>
+                <p>
+                    Full Stack developer managing all IT staff. Product research and development. Provide dedicated coaching to interns and new employees. Develop code fixes and enhancements for inclusion in future code releases and patches.
+                </p>
+            </div>
 
-  <footer>
-    © 2025 Herry Herdianto. Built with 💙 and GitHub Pages.
-  </footer>
+            <div data-date="July 2002 – Present">
+                <h3>STIE Malangkucecwara</h3>
+                <h4>Senior Programmer</h4>
+                <p>
+                    Implemented process management system using Java (JSE, JEE), PHP, Javascript language. Worked closely with clients to establish problem specifications and system designs. Provided dedicated coaching to interns and new employees. Designed and developed databases and analytical data structures.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- End #experience -->
 
+    <div id="education">
+        <!-- <h2 class="heading">Education</h2>
+        <div class="education-block">
+            <h3>University of Ottawa</h3>
+            <span class="education-date">Sept 2016 - Sept 2017</span>
+            <h4>Bachelor of Science in Computer Science</h4>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
+            </p>
+        </div> -->
+        <!-- End .education-block -->
+
+        <!-- <div class="education-block">
+            <h3>University of Ottawa</h3>
+            <span class="education-date">Sept 2016 - Sept 2017</span>
+            <h4>Bachelor of Science in Computer Science</h4>
+            <ul>
+                <li>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </li>
+                <li>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </li>
+                <li>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </li>
+            </ul>
+        </div> -->
+        <!-- End .education-block -->
+    </div>
+    <!-- End #education -->
+
+    <div id="projects" class="background-alt">
+        <h2 class="heading">Projects</h2>
+        <div class="container">
+            <div class="row">
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>RVARE</h3>
+                        <p>
+                            Company profile and web-based dashboard for PR consultant and AI Crisis Detector, developed using React, Django, and MongoDB.
+                        </p>
+                        <a href="https://rvare.id" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>BoringAI</h3>
+                        <p>
+                            Web application making AI implementation simple and accessible, especially for small and medium businesses. Provides practical AI solutions without complexity.
+                        </p>
+                        <a href="https://boringai.io" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Mebiso.com</h3>
+                        <p>
+                            Web application for detecting and monitoring registered company brands.
+                        </p>
+                        <a href="https://mebiso.com" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Artcycling</h3>
+                        <p>
+                            Kotlin Mobile app for track cycling route and upload to web with Laravel Back-end.
+                        </p>
+                        <a href="https://artcycling.id" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>National Art Gallery Reservation System</h3>
+                        <p>
+                            Develop online reservation system for National Art Gallery, Laravel + VueJS.
+                        </p>
+                        <a href="https://galnas.id" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/project.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>SMM Web</h3>
+                        <p>
+                            A Laravel web application for Social Media Marketing, focused on creating, improving, and maintaining.
+                        </p>
+                        <a href="https://bisnison.com" target="_blank">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+            </div>
+        </div>
+    </div>
+    <!-- End #projects -->
+
+    <div id="skills">
+        <h2 class="heading">Skills</h2>
+        <ul>
+            <li>PHP & Laravel</li>
+            <li>Java (JSE, JEE & Android)</li>
+            <li>Linux Administrator</li>
+            <li>Kotlin</li>
+            <li>JavaScript</li>
+            <li>Node.js</li>
+            <li>Angular</li>
+            <li>VueJS</li>
+            <li>Python</li>
+            <li>Django</li>
+            <li>ElasticSearch</li>
+            <li>C#</li>
+            <li>React</li>
+            <li>MongoDB</li>
+            <li>MySQL</li>
+            <li>Database Design</li>
+            <li>Business Analysis</li>
+            <li>Bug Tracking</li>
+            <li>English Communication</li>
+            <li>Microservices</li>
+            <li>High Availability Systems</li>
+            <li>Scalable Applications</li>
+        </ul>
+    </div>
+    <!-- End #skills -->
+
+    <div id="contact">
+        <h2>Get in Touch</h2>
+        <div id="contact-form">
+            <form method="POST" action="https://formspree.io/hherdianto@gmail.com">
+                <input type="hidden" name="_subject" value="Contact request from personal website" />
+                <input type="email" name="_replyto" placeholder="Your email" required>
+                <textarea name="message" placeholder="Your message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <!-- End #contact-form -->
+    </div>
+    <!-- End #contact -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 copyright">
+                    <p>
+                        Copyright &copy; <span id="current-year">2025</span> Herry Herdianto
+                    </p>
+                </div>
+                <div class="col-sm-2 top">
+                    <span id="to-top">
+                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="col-sm-5 social">
+                    <ul>
+                        <li>
+                            <a href="https://github.com/" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://stackoverflow.com/" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/scripts.min.js"></script>
 </body>
+
 </html>
