@@ -15,6 +15,6 @@ The source for [hherdianto.github.io/portfolio](https://hherdianto.github.io/por
 - **RVARE** - AI crisis and reputation intelligence
 - **Petruck.id** - logistics and fleet operational intelligence
 - **Mebiso** - AI-assisted brand analysis and monitoring
-- **FNI** - commerce and membership operations
+- **BoringAI.io** - AI workflow marketplace and virtual employee automation
 
 The site is built as a dependency-free static page for GitHub Pages.
