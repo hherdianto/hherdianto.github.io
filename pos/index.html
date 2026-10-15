@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Portofolio studi kasus: Toko Air Mancur POS — sistem point-of-sale offline-first dengan Laravel, Vue 3, dan sync engine idempotent. Oleh hherdianto.">
+<title>Portofolio — Toko Air Mancur POS | hherdianto</title>
+<style>html,body{margin:0;padding:0;background:#0a1322}</style>
+</head>
+<body>
+<div id="porto-tam-pos">
+  <style>
+    #porto-tam-pos{
+      --ptp-bg:#0a1322; --ptp-surface:#101d33; --ptp-surface2:#0d182b;
+      --ptp-border:rgba(148,163,184,.18); --ptp-border-strong:rgba(148,163,184,.30);
+      --ptp-text:#e7eef9; --ptp-muted:#9db0ca;
+      --ptp-accent:#3fd6f2; --ptp-accent-soft:rgba(63,214,242,.12);
+      font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1100px 480px at 12% -8%, rgba(63,214,242,.13), transparent 60%),
+        radial-gradient(900px 420px at 110% 0%, rgba(99,102,241,.10), transparent 55%),
+        var(--ptp-bg);
+      color:var(--ptp-text); line-height:1.6;
+      padding:clamp(24px,4vw,56px) clamp(16px,4vw,40px);
+      font-variant-numeric:tabular-nums;
+    }
+    #porto-tam-pos *,#porto-tam-pos *::before,#porto-tam-pos *::after{box-sizing:border-box;margin:0}
+    #porto-tam-pos .ptp-wrap{max-width:1024px;margin:0 auto}
+    #porto-tam-pos h1,#porto-tam-pos h2,#porto-tam-pos h3,#porto-tam-pos h4{line-height:1.25;font-weight:600;letter-spacing:-.01em}
+    #porto-tam-pos h2{font-size:clamp(20px,2.6vw,26px);margin-bottom:6px}
+    #porto-tam-pos h3{font-size:15px;margin-bottom:6px}
+    #porto-tam-pos p{color:var(--ptp-muted)}
+    #porto-tam-pos section{margin-top:clamp(36px,5vw,56px)}
+    #porto-tam-pos .ptp-kicker{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ptp-accent);margin-bottom:10px}
+    #porto-tam-pos .ptp-lead{color:var(--ptp-text);font-size:clamp(15px,2vw,17px)}
+    #porto-tam-pos .ptp-head{border-bottom:1px solid var(--ptp-border);padding-bottom:clamp(24px,3vw,36px)}
+    #porto-tam-pos .ptp-title{font-size:clamp(30px,6vw,48px);margin:6px 0 12px}
+    #porto-tam-pos .ptp-title em{font-style:normal;color:var(--ptp-accent)}
+    #porto-tam-pos .ptp-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:13px;color:var(--ptp-muted)}
+    #porto-tam-pos .ptp-meta strong{color:var(--ptp-text);font-weight:500}
+    #porto-tam-pos .ptp-meta span{display:inline-flex;align-items:center;gap:7px}
+    #porto-tam-pos .ptp-dot{width:5px;height:5px;border-radius:50%;background:var(--ptp-accent);display:inline-block}
+    #porto-tam-pos a{color:var(--ptp-accent);text-decoration:none}
+    #porto-tam-pos a:hover{text-decoration:underline}
+
+    /* stats */
+    #porto-tam-pos .ptp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px}
+    #porto-tam-pos .ptp-stat{background:var(--ptp-surface2);border:1px solid var(--ptp-border);border-radius:12px;padding:16px 16px 14px}
+    #porto-tam-pos .ptp-stat b{display:block;font-size:clamp(24px,3.4vw,32px);font-weight:600;color:var(--ptp-accent);line-height:1.1}
+    #porto-tam-pos .ptp-stat span{font-size:12.5px;color:var(--ptp-muted)}
+
+    /* problem/solution */
+    #porto-tam-pos .ptp-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px}
+    #porto-tam-pos .ptp-box{background:var(--ptp-surface2);border:1px solid var(--ptp-border);border-radius:12px;padding:18px}
+    #porto-tam-pos .ptp-box h3{color:var(--ptp-text)}
+    #porto-tam-pos .ptp-box .ptp-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px;margin-bottom:10px}
+    #porto-tam-pos .ptp-tag-masalah{background:rgba(248,113,113,.12);color:#fca5a5}
+    #porto-tam-pos .ptp-tag-solusi{background:var(--ptp-accent-soft);color:var(--ptp-accent)}
+    #porto-tam-pos ul{padding-left:18px;color:var(--ptp-muted)}
+    #porto-tam-pos li{margin:6px 0}
+    #porto-tam-pos li::marker{color:var(--ptp-accent)}
+    #porto-tam-pos li strong{color:var(--ptp-text);font-weight:500}
+
+    /* architecture */
+    #porto-tam-pos .ptp-arch{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+    @media(min-width:760px){
+      #porto-tam-pos .ptp-arch{grid-template-columns:1fr 44px 1.15fr 44px 1fr;align-items:stretch}
+      #porto-tam-pos .ptp-conn{flex-direction:column;justify-content:center}
+    }
+    #porto-tam-pos .ptp-node{background:var(--ptp-surface2);border:1px solid var(--ptp-border-strong);border-radius:14px;padding:16px 18px}
+    #porto-tam-pos .ptp-node h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+    #porto-tam-pos .ptp-node h3 small{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ptp-accent)}
+    #porto-tam-pos .ptp-node ul{font-size:13.5px;margin-top:8px}
+    #porto-tam-pos .ptp-conn{display:flex;align-items:center;justify-content:center;color:var(--ptp-accent);font-size:20px;font-weight:600}
+    #porto-tam-pos .ptp-sync{margin-top:12px;background:var(--ptp-accent-soft);border:1px dashed rgba(63,214,242,.4);border-radius:12px;padding:12px 16px;font-size:13.5px;color:var(--ptp-text);text-align:center}
+
+    /* features */
+    #porto-tam-pos .ptp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px}
+    #porto-tam-pos .ptp-card{background:var(--ptp-surface2);border:1px solid var(--ptp-border);border-radius:14px;padding:18px;transition:border-color .15s ease}
+    #porto-tam-pos .ptp-card:hover{border-color:var(--ptp-border-strong)}
+    #porto-tam-pos .ptp-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--ptp-accent-soft);color:var(--ptp-accent);font-size:13px;font-weight:600;margin-bottom:10px}
+    #porto-tam-pos .ptp-card ul{font-size:13.5px}
+
+    /* tech */
+    #porto-tam-pos .ptp-tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px}
+    #porto-tam-pos .ptp-tech h3{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ptp-muted);margin-bottom:10px}
+    #porto-tam-pos .ptp-chips{display:flex;flex-wrap:wrap;gap:7px}
+    #porto-tam-pos .ptp-chip{font-size:12.5px;background:var(--ptp-surface);border:1px solid var(--ptp-border);border-radius:999px;padding:4px 11px;color:var(--ptp-text)}
+
+    /* testing */
+    #porto-tam-pos .ptp-tests{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
+    #porto-tam-pos .ptp-test{background:var(--ptp-surface2);border:1px solid var(--ptp-border);border-radius:12px;padding:14px 16px;text-align:center}
+    #porto-tam-pos .ptp-test b{display:block;font-size:26px;font-weight:600;color:var(--ptp-accent)}
+    #porto-tam-pos .ptp-test span{font-size:12.5px;color:var(--ptp-muted)}
+    #porto-tam-pos .ptp-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px}
+
+    /* timeline */
+    #porto-tam-pos .ptp-tl{list-style:none;padding:0;margin-top:16px;position:relative}
+    #porto-tam-pos .ptp-tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--ptp-border-strong)}
+    #porto-tam-pos .ptp-tl li{position:relative;padding:0 0 20px 30px}
+    #porto-tam-pos .ptp-tl li:last-child{padding-bottom:0}
+    #porto-tam-pos .ptp-tl li::before{content:"";position:absolute;left:1px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--ptp-bg);border:3px solid var(--ptp-accent)}
+    #porto-tam-pos .ptp-tl time{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ptp-accent)}
+    #porto-tam-pos .ptp-tl strong{font-weight:600}
+    #porto-tam-pos .ptp-tl p{font-size:13.5px}
+
+    #porto-tam-pos .ptp-foot{margin-top:clamp(40px,5vw,60px);border-top:1px solid var(--ptp-border);padding-top:20px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;font-size:13px;color:var(--ptp-muted)}
+    @media print{
+      #porto-tam-pos{background:#fff;color:#111}
+      #porto-tam-pos .ptp-stat,#porto-tam-pos .ptp-box,#porto-tam-pos .ptp-node,#porto-tam-pos .ptp-card,
+      #porto-tam-pos .ptp-test,#porto-tam-pos .ptp-chip{background:#fff;border-color:#ccc}
+      #porto-tam-pos .ptp-sync{background:#f2fbfe;border-color:#7cc7dd}
+    }
+  </style>
+
+  <div class="ptp-wrap">
+    <header class="ptp-head">
+      <div class="ptp-kicker">Portofolio · Studi Kasus Aplikasi Retail</div>
+      <h1 class="ptp-title">Toko Air Mancur <em>POS</em></h1>
+      <p class="ptp-lead">Sistem point-of-sale <strong>offline-first</strong> untuk retail: kasir tetap jualan saat internet mati, transaksi tersinkron otomatis ke backoffice begitu koneksi pulih, dan tidak ada penjualan yang hilang maupun tercatat ganda.</p>
+      <div class="ptp-meta">
+        <span><i class="ptp-dot"></i><strong>hherdianto</strong> — Full-Stack Developer</span>
+        <span><i class="ptp-dot"></i>Peran: arsitektur, backend, frontend, sync engine, testing</span>
+        <span><i class="ptp-dot"></i>Juli – Oktober 2026</span>
+        <span><i class="ptp-dot"></i><a href="https://github.com/hherdianto/Laravel-POS">github.com/hherdianto/Laravel-POS</a></span>
+      </div>
+    </header>
+
+    <section aria-label="Statistik proyek">
+      <div class="ptp-stats">
+        <div class="ptp-stat"><b>555+</b><span>pengujian otomatis (Pest · Vitest · Playwright)</span></div>
+        <div class="ptp-stat"><b>74</b><span>commit terstruktur (conventional commits)</span></div>
+        <div class="ptp-stat"><b>49</b><span>migrasi database · 27 model Eloquent</span></div>
+        <div class="ptp-stat"><b>53rb+</b><span>baris kode PHP · TypeScript · Vue</span></div>
+        <div class="ptp-stat"><b>24</b><span>spesifikasi E2E, termasuk chaos testing</span></div>
+        <div class="ptp-stat"><b>14</b><span>dokumen engineering + ADR</span></div>
+      </div>
+    </section>
+
+    <section aria-label="Ringkasan proyek">
+      <div class="ptp-kicker">Ringkasan</div>
+      <h2>Masalah &amp; Solusi</h2>
+      <div class="ptp-duo">
+        <div class="ptp-box">
+          <span class="ptp-tag ptp-tag-masalah">Masalah</span>
+          <ul>
+            <li>Kasir berjalan di tablet dengan <strong>koneksi internet yang tidak selalu stabil</strong> — sistem cloud murni akan menghentikan penjualan saat offline.</li>
+            <li>Sinkronisasi ulang pasca-offline berisiko <strong>transaksi ganda</strong> atau hilang.</li>
+            <li>Pemilik toko butuh visibilitas <strong>stok, pembelian, dan piutang (kas bon)</strong> secara real-time dari satu tempat.</li>
+          </ul>
+        </div>
+        <div class="ptp-box">
+          <span class="ptp-tag ptp-tag-solusi">Solusi</span>
+          <ul>
+            <li>Satu <strong>monolit Laravel sebagai sumber kebenaran</strong> + PWA offline-first di tablet: transaksi di-commit ke IndexedDB dan struk tercetak <strong>sebelum</strong> request jaringan apa pun.</li>
+            <li><strong>Sync engine dua arah yang idempotent</strong> — setiap batch membawa UUID v7 + Idempotency-Key sehingga replay selalu aman.</li>
+            <li><strong>Backoffice Inertia</strong> untuk pemilik/admin: master data, pembelian, konsinyasi, piutang, laporan, dan audit log.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Arsitektur">
+      <div class="ptp-kicker">Arsitektur</div>
+      <h2>Satu Aplikasi, Tiga Permukaan</h2>
+      <div class="ptp-arch">
+        <div class="ptp-node">
+          <h3>Tablet Kasir <small>PWA · offline-first</small></h3>
+          <ul>
+            <li>Vue 3 + Pinia + Vue Router</li>
+            <li>Dexie/IndexedDB — source of truth lokal</li>
+            <li>Validasi skema Zod, service worker (Workbox)</li>
+            <li>Login PIN numpad, cetak struk thermal</li>
+          </ul>
+        </div>
+        <div class="ptp-conn" aria-hidden="true">&#8646;</div>
+        <div class="ptp-node">
+          <h3>REST API <small>Laravel 13 · PHP 8.4</small></h3>
+          <ul>
+            <li>Sanctum — token per perangkat + rotasi berkala</li>
+            <li>Endpoint sync pull/push batch idempotent</li>
+            <li>Rate limit, policy authorization, audit</li>
+            <li>MariaDB (produksi) · SQLite (CI)</li>
+          </ul>
+        </div>
+        <div class="ptp-conn" aria-hidden="true">&#8646;</div>
+        <div class="ptp-node">
+          <h3>Backoffice <small>Inertia 3 · sesi web</small></h3>
+          <ul>
+            <li>Fortify + CSRF, RBAC 3 peran</li>
+            <li>Master data &amp; pembelian lengkap</li>
+            <li>Monitor sync per perangkat + log</li>
+            <li>Laporan, audit log, manajemen pengguna</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ptp-sync">Sinkronisasi dua arah via HTTPS — push batch idempotent (UUID v7 + Idempotency-Key) &amp; pull berbasis cursor versi monoton dari server</div>
+    </section>
+
+    <section aria-label="Fitur utama">
+      <div class="ptp-kicker">Fitur Utama</div>
+      <h2>Yang Dibangun</h2>
+      <div class="ptp-grid">
+        <div class="ptp-card">
+          <span class="ptp-num">01</span>
+          <h3>Kasir 100% Offline</h3>
+          <ul>
+            <li>Transaksi multi-pembayaran, quick-cash denom, diskon transaksi</li>
+            <li>Override harga manual dengan floor harga modal</li>
+            <li>Struk thermal — adapter printer &amp; lebar kertas dapat dikonfigurasi</li>
+            <li>Recovery draft saat app crash di tengah transaksi</li>
+          </ul>
+        </div>
+        <div class="ptp-card">
+          <span class="ptp-num">02</span>
+          <h3>Sync Engine Idempotent</h3>
+          <ul>
+            <li>Cursor versi server (wall-clock tablet tak pernah dipercaya)</li>
+            <li>Tombstone untuk penghapusan, antrian tak dihapus sebelum ack</li>
+            <li>Rotasi token dengan grace period, self-heal stale lock</li>
+            <li>Manual sync, bootstrap pull, laporan kedalaman antrian</li>
+          </ul>
+        </div>
+        <div class="ptp-card">
+          <span class="ptp-num">03</span>
+          <h3>Keamanan Berlapis</h3>
+          <ul>
+            <li>RBAC: OWNER / ADMIN / CASHIER + permission granular</li>
+            <li>Token Sanctum per perangkat, kode registrasi perangkat</li>
+            <li>Cache PIN offline terenkripsi, audit log menyeluruh</li>
+          </ul>
+        </div>
+        <div class="ptp-card">
+          <span class="ptp-num">04</span>
+          <h3>Inventori &amp; Pembelian</h3>
+          <ul>
+            <li>Pembelian, retur pembelian, dan modul konsinyasi</li>
+            <li>Kartu stok (stock movement) per produk</li>
+            <li>Produk multi-barcode &amp; multi-harga, kategori, supplier</li>
+          </ul>
+        </div>
+        <div class="ptp-card">
+          <span class="ptp-num">05</span>
+          <h3>Kas Bon &amp; Piutang</h3>
+          <ul>
+            <li>Pembayaran kredit otomatis menjadi receivable</li>
+            <li>Pelunasan (settlement) + rekonsiliasi metode bayar pasca-sync</li>
+            <li>Laporan piutang dengan sortir, shift close dengan variance kas</li>
+          </ul>
+        </div>
+        <div class="ptp-card">
+          <span class="ptp-num">06</span>
+          <h3>Backoffice Lengkap</h3>
+          <ul>
+            <li>CRUD server-side: cari, filter, sortir, paginasi konsisten</li>
+            <li>Dashboard, laporan transaksi, monitor status perangkat</li>
+            <li>UI Bahasa Indonesia, dark-ready, komponen reka-ui</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Teknologi">
+      <div class="ptp-kicker">Teknologi</div>
+      <h2>Stack Modern End-to-End</h2>
+      <div class="ptp-tech">
+        <div>
+          <h3>Backend</h3>
+          <div class="ptp-chips"><span class="ptp-chip">Laravel 13</span><span class="ptp-chip">PHP 8.4</span><span class="ptp-chip">Sanctum 4</span><span class="ptp-chip">Fortify</span><span class="ptp-chip">Wayfinder</span><span class="ptp-chip">Eloquent</span><span class="ptp-chip">Queue</span></div>
+        </div>
+        <div>
+          <h3>Frontend</h3>
+          <div class="ptp-chips"><span class="ptp-chip">Vue 3.5</span><span class="ptp-chip">Inertia 3</span><span class="ptp-chip">Tailwind CSS 4</span><span class="ptp-chip">Pinia</span><span class="ptp-chip">Vue Router</span><span class="ptp-chip">reka-ui</span><span class="ptp-chip">TypeScript</span></div>
+        </div>
+        <div>
+          <h3>Data &amp; Offline</h3>
+          <div class="ptp-chips"><span class="ptp-chip">MariaDB</span><span class="ptp-chip">SQLite (CI)</span><span class="ptp-chip">Dexie 4 / IndexedDB</span><span class="ptp-chip">Zod</span><span class="ptp-chip">Workbox PWA</span></div>
+        </div>
+        <div>
+          <h3>Kualitas &amp; Tooling</h3>
+          <div class="ptp-chips"><span class="ptp-chip">Pest 4</span><span class="ptp-chip">Playwright</span><span class="ptp-chip">Vitest</span><span class="ptp-chip">Larastan 3</span><span class="ptp-chip">Pint</span><span class="ptp-chip">ESLint 9</span><span class="ptp-chip">GitHub Actions</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Kualitas dan pengujian">
+      <div class="ptp-kicker">Kualitas</div>
+      <h2>Testing Sebagai Kebutuhan Utama</h2>
+      <div class="ptp-tests">
+        <div class="ptp-test"><b>319</b><span>test Pest — feature &amp; unit, termasuk suite Chaos dan Sync</span></div>
+        <div class="ptp-test"><b>159</b><span>test Vitest — sync engine dengan fake-indexeddb</span></div>
+        <div class="ptp-test"><b>77</b><span>test E2E Playwright di 24 file spesifikasi</span></div>
+      </div>
+      <div class="ptp-cols">
+        <div class="ptp-box">
+          <h3>Chaos Testing di E2E</h3>
+          <ul>
+            <li>Printer mati di tengah cetak &amp; token expired saat sync</li>
+            <li>Stale lock, antrian pending saat reload, dedup pembayaran</li>
+            <li>Recovery draft dan alur update PWA (update prompt)</li>
+          </ul>
+        </div>
+        <div class="ptp-box">
+          <h3>CI &amp; Dokumentasi</h3>
+          <ul>
+            <li>GitHub Actions: lint, static analysis (Larastan), seluruh test — SQLite in-memory</li>
+            <li>10 dokumen engineering: arsitektur, protokol sync, rencana pemulihan, register risiko, keamanan, rencana test</li>
+            <li>4 Architecture Decision Record (ADR)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Sorotan engineering">
+      <div class="ptp-kicker">Sorotan Engineering</div>
+      <h2>Keputusan Desain Kunci</h2>
+      <ul>
+        <li><strong>Jualan tidak pernah menunggu jaringan.</strong> Transaksi di-commit lokal dan struk tercetak sebelum ada panggilan API; sync berjalan best-effort di belakang.</li>
+        <li><strong>Idempotency menyeluruh.</strong> Header <em>Idempotency-Key</em> (UUID penjualan) membuat server aman menerima payload yang sama berkali-kali dan selalu mengembalikan respons asli.</li>
+        <li><strong>Server adalah clock tunggal.</strong> Cursor versi monotonic di sisi server; crash di tengah pull aman diulang karena cursor hanya maju setelah delta berhasil ditulis.</li>
+        <li><strong>Konflik eksplisit, tidak pernah menimpa diam-diam.</strong> Konflik data diselesaikan lewat kebijakan yang terdokumentasi, bukan overwrite otomatis.</li>
+      </ul>
+    </section>
+
+    <section aria-label="Kronologi pengerjaan">
+      <div class="ptp-kicker">Kronologi</div>
+      <h2>Dari Fondasi ke Hardening</h2>
+      <ol class="ptp-tl">
+        <li>
+          <time>Jul 2026</time>
+          <strong>Fondasi &amp; keamanan</strong>
+          <p>Autentikasi Fortify, RBAC + permission, entitas store/terminal/perangkat, kode registrasi perangkat, audit log.</p>
+        </li>
+        <li>
+          <time>Jul – Agu 2026</time>
+          <strong>Master data &amp; REST API</strong>
+          <p>Produk multi-harga &amp; multi-barcode, kategori, supplier, pelanggan, metode pembayaran, endpoint API Sanctum.</p>
+        </li>
+        <li>
+          <time>Agu 2026</time>
+          <strong>POS PWA &amp; protokol sync</strong>
+          <p>Aplikasi kasir Vue + Dexie, pull/push dua arah, rotasi token dengan grace period, monitor sync &amp; log.</p>
+        </li>
+        <li>
+          <time>Sep 2026</time>
+          <strong>Pembelian &amp; kas bon</strong>
+          <p>Modul pembelian/retur/konsinyasi, piutang + pelunasan, diskon transaksi, pencarian &amp; paginasi menyeluruh.</p>
+        </li>
+        <li>
+          <time>Okt 2026</time>
+          <strong>Hardening &amp; chaos testing</strong>
+          <p>Skenario kegagalan di E2E (printer mati, token expired, stale lock), recovery path, alur update PWA.</p>
+        </li>
+      </ol>
+    </section>
+
+    <footer class="ptp-foot">
+      <span><strong>hherdianto</strong> · Full-Stack Developer — Laravel · Vue · TypeScript</span>
+      <span><a href="https://github.com/hherdianto/Laravel-POS">github.com/hherdianto/Laravel-POS</a> · 2026</span>
+    </footer>
+  </div>
+</div>
+
+</body>
+</html>
